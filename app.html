@@ -621,7 +621,11 @@
         </span>
       </td>
       <td>
-        <a href="${job.link}" target="_blank" rel="noopener noreferrer" class="apply-link">
+        <a href="${job.link}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="apply-link"
+           onclick="trackApplyClick(${JSON.stringify(job.company || '')}, ${JSON.stringify(job.title || '')})">
           <i class="fas fa-external-link-alt"></i> Apply Now
         </a>
       </td>
@@ -766,6 +770,17 @@
       });
     })();
   });
+</script>
+<script>
+function trackApplyClick(company, title) {
+  if (typeof gtag === "function") {
+    gtag("event", "apply_click", {
+      event_category: "engagement",
+      event_label: title,
+      company_name: company
+    });
+  }
+}
 </script>
 </body>
 </html>
