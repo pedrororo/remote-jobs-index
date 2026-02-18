@@ -126,6 +126,8 @@
       cursor:pointer; opacity:0.85; font-weight:bold; font-size:12px;
       width:16px; height:16px; display:flex; align-items:center; justify-content:center;
       border-radius:50%; background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
     }
     .selected-tag .remove:hover { opacity:1; background: rgba(255,255,255,0.3); }
 
@@ -472,18 +474,29 @@
     const tagsDiv = document.getElementById(filterKey + 'Tags');
     if (!tagsDiv) return;
     tagsDiv.innerHTML = '';
-    selected[filterKey]?.forEach(value => {
+
+    (selected[filterKey] || new Set()).forEach(value => {
       const tag = document.createElement('span');
       tag.className = 'selected-tag';
-      tag.innerHTML = `
-        ${escapeHtml(value)}
-        <span class="remove" data-key="${filterKey}" data-value="${escapeHtml(value)}">×</span>
-      `;
+
+      const text = document.createElement('span');
+      text.textContent = value;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'remove';
+      removeBtn.textContent = '×';
+      removeBtn.dataset.key = filterKey;
+      removeBtn.dataset.value = value; // RAW VALUE (no escaping)
+
+      tag.appendChild(text);
+      tag.appendChild(removeBtn);
       tagsDiv.appendChild(tag);
     });
   }
 
   function removeTag(filterKey, value) {
+    if (!selected[filterKey]) return;
     selected[filterKey].delete(value);
     updateTags(filterKey);
     filterJobs();
@@ -553,9 +566,9 @@
     const expanded = document.createElement('div');
     expanded.className = 'posted-expanded';
     expanded.innerHTML = `
-      <div><strong>Posted:</strong> ${postedData.display}</div>
-      <div><strong>Date:</strong> ${postedData.date || 'Unknown'}</div>
-      <div><strong>Days ago:</strong> ${postedData.days_ago === 'Unknown' ? 'Unknown' : postedData.days_ago + ' days'}</div>
+      <div><strong>Posted:</strong> ${escapeHtml(postedData.display)}</div>
+      <div><strong>Date:</strong> ${escapeHtml(postedData.date || 'Unknown')}</div>
+      <div><strong>Days ago:</strong> ${postedData.days_ago === 'Unknown' ? 'Unknown' : (postedData.days_ago + ' days')}</div>
     `;
     postedElement.style.position = 'relative';
     postedElement.appendChild(expanded);
@@ -624,8 +637,7 @@
         <a href="${job.link}"
            target="_blank"
            rel="noopener noreferrer"
-           class="apply-link"
-           onclick="trackApplyClick(${JSON.stringify(job.company || '')}, ${JSON.stringify(job.title || '')})">
+           class="apply-link">
           <i class="fas fa-external-link-alt"></i> Apply Now
         </a>
       </td>
@@ -639,7 +651,7 @@
       });
     }
 
-    // ✅ GA4 apply tracking (correct scope)
+    // ✅ GA4 apply tracking (single source of truth)
     const applyLink = row.querySelector('a.apply-link');
     if (applyLink) {
       applyLink.addEventListener('click', () => {
@@ -647,10 +659,10 @@
           gtag('event', 'apply_click', {
             job_title: job.title || '',
             company: job.company || '',
-            location: job.location || '',
+            job_location: job.location || '',
             seniority: job.seniority_pretty || '',
             posted_date: job.posted_date || '',
-            link: job.link || ''
+            job_url: job.link || ''
           });
         }
       });
@@ -771,16 +783,6 @@
     })();
   });
 </script>
-<script>
-function trackApplyClick(company, title) {
-  if (typeof gtag === "function") {
-    gtag("event", "apply_click", {
-      event_category: "engagement",
-      event_label: title,
-      company_name: company
-    });
-  }
-}
-</script>
+
 </body>
 </html>
