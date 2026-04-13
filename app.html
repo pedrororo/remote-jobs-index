@@ -433,8 +433,12 @@
           </button>
           <button class="btn btn-secondary btn-sm" id="showTodayJobsBtn" type="button">
             <i class="fas fa-calendar-day"></i>
-            New Jobs Today
+            Fresh Jobs (48h)
           </button>
+          <button class="btn btn-secondary btn-sm" id="showWeekJobsBtn" type="button">
+              <i class="fas fa-calendar-week"></i>
+              New Jobs This Week
+            </button>
         </div>
       </div>
 
@@ -526,47 +530,93 @@
         fetchJson(`./${DATA_BASE}.counts.json`),
         fetchJson(`./${DATA_BASE}.meta.json`),
         fetchJson(`./${DATA_BASE}.insights.json`)
-      ]);
+    ]);
 
-  JOBS = jobs || [];
-  OPTIONS = options || OPTIONS;
-  OPTION_COUNTS = counts || OPTION_COUNTS;
-  META = meta || null;
-  INSIGHTS = insights || {
-    summary: {},
-    top_companies: [],
-    today_jobs: []
-  };
-}
+    JOBS = jobs || [];
+    OPTIONS = options || OPTIONS;
+    OPTION_COUNTS = counts || OPTION_COUNTS;
+    META = meta || null;
+    INSIGHTS = insights || {
+     summary: {},
+     top_companies: [],
+     fresh_jobs: [],
+     week_jobs: []
+   };
+ }
 
-  function escapeHtml(text) {
+function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
-  }
+    }
 
+
+function setActiveInsightButton(buttonId) {
+  document.querySelectorAll('[aria-label="Hiring insights"] .filters-actions button').forEach(btn => {
+    btn.classList.remove('btn');
+    btn.classList.add('btn-secondary');
+  });
+
+  const activeBtn = document.getElementById(buttonId);
+  if (activeBtn) {
+    activeBtn.classList.remove('btn-secondary');
+    activeBtn.classList.add('btn');
+  }
+}
 
   function renderInsightsSummary() {
-    const summary = INSIGHTS?.summary || {};
-    const totalJobs = summary.total_jobs || JOBS.length || 0;
-    const companies = summary.companies_with_open_roles || 0;
-    const today = summary.jobs_posted_today || 0;
+  const summary = INSIGHTS?.summary || {};
+  const totalJobs = summary.total_jobs || JOBS.length || 0;
+  const companies = summary.companies_with_open_roles || 0;
+  const fresh = summary.jobs_posted_fresh || 0;
+  const week = summary.jobs_posted_week || 0;
 
-    const el = document.getElementById('insightsSummary');
-    if (!el) return;
+  const el = document.getElementById('insightsSummary');
+  if (!el) return;
 
-    el.innerHTML = `
-      <span class="meta-tag"><i class="fas fa-briefcase"></i> ${totalJobs.toLocaleString()} total jobs</span>
-      <span class="meta-tag"><i class="fas fa-building"></i> ${companies.toLocaleString()} companies hiring</span>
-      <span class="meta-tag posted recent"><i class="fas fa-calendar-day"></i> ${today.toLocaleString()} jobs posted today</span>
-    `;
-  }
+  el.innerHTML = `
+    <span class="meta-tag"><i class="fas fa-briefcase"></i> ${totalJobs.toLocaleString()} total jobs</span>
+    <span class="meta-tag"><i class="fas fa-building"></i> ${companies.toLocaleString()} companies hiring</span>
+    <span class="meta-tag posted recent"><i class="fas fa-clock"></i> ${fresh.toLocaleString()} fresh jobs (48h)</span>
+    <span class="meta-tag posted recent"><i class="fas fa-calendar-week"></i> ${week.toLocaleString()} jobs this week</span>
+  `;
+}
+
+function renderWeekJobs() {
+  const content = document.getElementById('insightsContent');
+  if (!content) return;
+
+  const cards = (INSIGHTS?.week_jobs || []).slice(0, 50).map(job => `
+    <div class="insight-job-item">
+      <h4>${escapeHtml(job.title || '')}</h4>
+      <div class="insight-job-meta">
+        <span class="meta-tag"><i class="fas fa-building"></i> ${escapeHtml(job.company || '')}</span>
+        <span class="meta-tag"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || '')}</span>
+        <span class="meta-tag"><i class="fas fa-globe"></i> ${escapeHtml(job.source || '')}</span>
+        <span class="meta-tag posted recent"><i class="fas fa-calendar"></i> ${escapeHtml(job.posted_at || '')}</span>
+      </div>
+      <a href="${job.link || '#'}" target="_blank" rel="noopener noreferrer" class="apply-link">
+        <i class="fas fa-external-link-alt"></i> Open Job
+      </a>
+    </div>
+  `).join('');
+
+  content.innerHTML = `
+    <div class="insight-card">
+      <h3><i class="fas fa-calendar-week"></i> New Jobs This Week</h3>
+      <div class="insight-job-list">
+        ${cards || `<p>No jobs found in the last 7 days.</p>`}
+      </div>
+    </div>
+  `;
+}
+
 
   function renderTopCompanies() {
     const content = document.getElementById('insightsContent');
     if (!content) return;
 
-    const rows = (INSIGHTS?.top_companies || []).map((item, idx) => `
+    const rows = (INSIGHTS?.top_companies_fresh || []).map((item, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td><strong>${escapeHtml(item.company || '')}</strong></td>
@@ -595,34 +645,34 @@
     `;
   }
 
-  function renderTodayJobs() {
-    const content = document.getElementById('insightsContent');
-    if (!content) return;
+  function renderFreshJobs() {
+  const content = document.getElementById('insightsContent');
+  if (!content) return;
 
-    const cards = (INSIGHTS?.today_jobs || []).slice(0,50).map(job => `
-      <div class="insight-job-item">
-        <h4>${escapeHtml(job.title || '')}</h4>
-        <div class="insight-job-meta">
-          <span class="meta-tag"><i class="fas fa-building"></i> ${escapeHtml(job.company || '')}</span>
-          <span class="meta-tag"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || '')}</span>
-          <span class="meta-tag"><i class="fas fa-globe"></i> ${escapeHtml(job.source || '')}</span>
-          <span class="meta-tag posted recent"><i class="fas fa-calendar"></i> ${escapeHtml(job.posted_at || '')}</span>
-        </div>
-        <a href="${job.link || '#'}" target="_blank" rel="noopener noreferrer" class="apply-link">
-          <i class="fas fa-external-link-alt"></i> Open Job
-        </a>
+  const cards = (INSIGHTS?.fresh_jobs || []).slice(0, 50).map(job => `
+    <div class="insight-job-item">
+      <h4>${escapeHtml(job.title || '')}</h4>
+      <div class="insight-job-meta">
+        <span class="meta-tag"><i class="fas fa-building"></i> ${escapeHtml(job.company || '')}</span>
+        <span class="meta-tag"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || '')}</span>
+        <span class="meta-tag"><i class="fas fa-globe"></i> ${escapeHtml(job.source || '')}</span>
+        <span class="meta-tag posted recent"><i class="fas fa-calendar"></i> ${escapeHtml(job.posted_at || '')}</span>
       </div>
-    `).join('');
+      <a href="${job.link || '#'}" target="_blank" rel="noopener noreferrer" class="apply-link">
+        <i class="fas fa-external-link-alt"></i> Open Job
+      </a>
+    </div>
+  `).join('');
 
-    content.innerHTML = `
-      <div class="insight-card">
-        <h3><i class="fas fa-calendar-day"></i> New Jobs Today</h3>
-        <div class="insight-job-list">
-          ${cards || `<p>No jobs posted today.</p>`}
-        </div>
+  content.innerHTML = `
+    <div class="insight-card">
+      <h3><i class="fas fa-clock"></i> Fresh Jobs (Last 48h)</h3>
+      <div class="insight-job-list">
+        ${cards || `<p>No fresh jobs found in the last 48 hours.</p>`}
       </div>
-    `;
-  }  
+    </div>
+  `;
+} 
 
   function debounce(func, wait) {
     return function (...args) {
@@ -929,18 +979,19 @@
   }
 
   function initializeApp() {
-    filterConfig.forEach(cfg => {
-      if (cfg.type === 'multiselect') createDropdown(cfg.key);
-    });
-
-    updateHeaderStats();
-    renderInsightsSummary();
-    renderTopCompanies();
-
-    filteredJobs = JOBS.slice();
-    visibleCount = 0;
-    filterJobs();
-  }
+      filterConfig.forEach(cfg => {
+        if (cfg.type === 'multiselect') createDropdown(cfg.key);
+      });
+    
+      updateHeaderStats();
+      renderInsightsSummary();
+      setActiveInsightButton('showTodayJobsBtn');
+      renderFreshJobs();
+    
+      filteredJobs = JOBS.slice();
+      visibleCount = 0;
+      filterJobs();
+ }
 
   document.addEventListener('DOMContentLoaded', () => {
     (async () => {
@@ -957,8 +1008,20 @@
       document.getElementById('resetBtn')?.addEventListener('click', resetFilters);
 
       document.getElementById('titleInput')?.addEventListener('input', debounce(filterJobs, 300));
-      document.getElementById('showTopCompaniesBtn')?.addEventListener('click', renderTopCompanies);
-      document.getElementById('showTodayJobsBtn')?.addEventListener('click', renderTodayJobs);
+    document.getElementById('showTopCompaniesBtn')?.addEventListener('click', () => {
+      setActiveInsightButton('showTopCompaniesBtn');
+      renderTopCompanies();
+    });
+    
+    document.getElementById('showTodayJobsBtn')?.addEventListener('click', () => {
+      setActiveInsightButton('showTodayJobsBtn');
+      renderFreshJobs();
+    });
+    
+    document.getElementById('showWeekJobsBtn')?.addEventListener('click', () => {
+      setActiveInsightButton('showWeekJobsBtn');
+      renderWeekJobs();
+    });
 
       document.addEventListener('click', function(e) {
         if (e.target.classList.contains('remove')) {
