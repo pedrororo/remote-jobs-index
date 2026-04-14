@@ -496,6 +496,10 @@
   let META = null;
   let INSIGHTS = null;
 
+  let freshJobsPage = 1;
+  let weekJobsPage = 1;
+  const JOBS_PER_PAGE = 20;
+  
   let debounceTimer;
   let filteredJobs = [];
   let visibleCount = 0;
@@ -586,7 +590,7 @@ function renderWeekJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const cards = (INSIGHTS?.week_jobs || []).slice(0, 50).map(job => `
+  const cards = (INSIGHTS?.week_jobs || []).slice(0, 20).map(job => `
     <div class="insight-job-item">
       <h4>${escapeHtml(job.title || '')}</h4>
       <div class="insight-job-meta">
@@ -645,18 +649,31 @@ function renderWeekJobs() {
     `;
   }
 
+  function changeFreshJobsPage(delta) {
+  const jobs = INSIGHTS?.fresh_jobs || [];
+  const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE);
+  freshJobsPage = Math.max(1, Math.min(freshJobsPage + delta, totalPages || 1));
+  renderFreshJobs();
+}
+
+
+
   function renderFreshJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const cards = (INSIGHTS?.fresh_jobs || []).slice(0, 50).map(job => `
+  const jobs = INSIGHTS?.fresh_jobs || [];
+  const start = (freshJobsPage - 1) * JOBS_PER_PAGE;
+  const end = start + JOBS_PER_PAGE;
+  const visibleJobs = jobs.slice(start, end);
+
+  const cards = visibleJobs.map(job => `
     <div class="insight-job-item">
       <h4>${escapeHtml(job.title || '')}</h4>
       <div class="insight-job-meta">
         <span class="meta-tag"><i class="fas fa-building"></i> ${escapeHtml(job.company || '')}</span>
         <span class="meta-tag"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || '')}</span>
-        <span class="meta-tag"><i class="fas fa-globe"></i> ${escapeHtml(job.source || '')}</span>
-        <span class="meta-tag posted recent"><i class="fas fa-calendar"></i> ${escapeHtml(job.posted_at || '')}</span>
+        <span class="meta-tag"><i class="fas fa-calendar"></i> ${escapeHtml(job.posted_at || '')}</span>
       </div>
       <a href="${job.link || '#'}" target="_blank" rel="noopener noreferrer" class="apply-link">
         <i class="fas fa-external-link-alt"></i> Open Job
@@ -664,15 +681,22 @@ function renderWeekJobs() {
     </div>
   `).join('');
 
+  const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE);
+
   content.innerHTML = `
     <div class="insight-card">
       <h3><i class="fas fa-clock"></i> Fresh Jobs (Last 48h)</h3>
       <div class="insight-job-list">
-        ${cards || `<p>No fresh jobs found in the last 48 hours.</p>`}
+        ${cards || `<p>No fresh jobs found.</p>`}
+      </div>
+      <div class="pagination-controls" style="margin-top:16px; display:flex; gap:8px;">
+        <button class="btn btn-secondary btn-sm" onclick="changeFreshJobsPage(-1)" ${freshJobsPage <= 1 ? 'disabled' : ''}>Previous</button>
+        <span class="meta-tag">Page ${freshJobsPage} of ${totalPages || 1}</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeFreshJobsPage(1)" ${freshJobsPage >= totalPages ? 'disabled' : ''}>Next</button>
       </div>
     </div>
   `;
-} 
+}
 
   function debounce(func, wait) {
     return function (...args) {
@@ -1014,11 +1038,13 @@ function renderWeekJobs() {
     });
     
     document.getElementById('showTodayJobsBtn')?.addEventListener('click', () => {
+      freshJobsPage = 1;
       setActiveInsightButton('showTodayJobsBtn');
       renderFreshJobs();
     });
     
     document.getElementById('showWeekJobsBtn')?.addEventListener('click', () => {
+      weekJobsPage = 1;
       setActiveInsightButton('showWeekJobsBtn');
       renderWeekJobs();
     });
