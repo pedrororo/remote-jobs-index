@@ -495,6 +495,8 @@
   let OPTION_COUNTS = { company: {}, seniority: {}, location: {}, posted: {} };
   let META = null;
   let INSIGHTS = null;
+  let TODAY_JOBS = [];
+  let WEEK_JOBS = [];
 
   let freshJobsPage = 1;
   let weekJobsPage = 1;
@@ -528,23 +530,25 @@
   }
 
   async function bootstrapData() {
-    const [jobs, options, counts, meta, insights] = await Promise.all([
+    const [jobs, options, counts, meta, insights, todayJobs, weekJobs] = await Promise.all([
         fetchJson(`./${DATA_BASE}.jobs.json`),
         fetchJson(`./${DATA_BASE}.options.json`),
         fetchJson(`./${DATA_BASE}.counts.json`),
         fetchJson(`./${DATA_BASE}.meta.json`),
-        fetchJson(`./${DATA_BASE}.insights.json`)
+        fetchJson(`./${DATA_BASE}.insights.json`),
+        fetchJson(`./${DATA_BASE}.today_jobs.json`),
+        fetchJson(`./${DATA_BASE}.week_jobs.json`)
     ]);
 
     JOBS = jobs || [];
     OPTIONS = options || OPTIONS;
     OPTION_COUNTS = counts || OPTION_COUNTS;
     META = meta || null;
+    TODAY_JOBS = todayJobs || [];
+    WEEK_JOBS = weekJobs || [];
     INSIGHTS = insights || {
      summary: {},
-     top_companies: [],
-     fresh_jobs: [],
-     week_jobs: []
+     top_companies: []
    };
  }
 
@@ -586,11 +590,23 @@ function setActiveInsightButton(buttonId) {
   `;
 }
 
+function changeWeekJobsPage(delta) {
+  const jobs = WEEK_JOBS || [];
+  const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE);
+  weekJobsPage = Math.max(1, Math.min(weekJobsPage + delta, totalPages || 1));
+  renderWeekJobs();
+}
+
 function renderWeekJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const cards = (INSIGHTS?.week_jobs || []).slice(0, 20).map(job => `
+  const jobs = WEEK_JOBS || [];
+  const start = (weekJobsPage - 1) * JOBS_PER_PAGE;
+  const end = start + JOBS_PER_PAGE;
+  const visibleJobs = jobs.slice(start, end);
+  
+  const cards = visibleJobs.map(job => `
     <div class="insight-job-item">
       <h4>${escapeHtml(job.title || '')}</h4>
       <div class="insight-job-meta">
@@ -605,11 +621,18 @@ function renderWeekJobs() {
     </div>
   `).join('');
 
+  const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE);
+
   content.innerHTML = `
     <div class="insight-card">
       <h3><i class="fas fa-calendar-week"></i> New Jobs This Week</h3>
       <div class="insight-job-list">
         ${cards || `<p>No jobs found in the last 7 days.</p>`}
+      </div>
+      <div class="pagination-controls" style="margin-top:16px; display:flex; gap:8px;">
+        <button class="btn btn-secondary btn-sm" onclick="changeWeekJobsPage(-1)" ${weekJobsPage <= 1 ? 'disabled' : ''}>Previous</button>
+        <span class="meta-tag">Page ${weekJobsPage} of ${totalPages || 1}</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeWeekJobsPage(1)" ${weekJobsPage >= totalPages ? 'disabled' : ''}>Next</button>
       </div>
     </div>
   `;
@@ -620,7 +643,7 @@ function renderWeekJobs() {
     const content = document.getElementById('insightsContent');
     if (!content) return;
 
-    const rows = (INSIGHTS?.top_companies_fresh || []).map((item, idx) => `
+    const rows = (INSIGHTS?.top_companies_fresh || INSIGHTS?.top_companies || []).map((item, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td><strong>${escapeHtml(item.company || '')}</strong></td>
@@ -650,7 +673,7 @@ function renderWeekJobs() {
   }
 
   function changeFreshJobsPage(delta) {
-  const jobs = INSIGHTS?.fresh_jobs || [];
+  const jobs = TODAY_JOBS || [];
   const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE);
   freshJobsPage = Math.max(1, Math.min(freshJobsPage + delta, totalPages || 1));
   renderFreshJobs();
@@ -662,7 +685,7 @@ function renderWeekJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const jobs = INSIGHTS?.fresh_jobs || [];
+  const jobs = TODAY_JOBS || [];
   const start = (freshJobsPage - 1) * JOBS_PER_PAGE;
   const end = start + JOBS_PER_PAGE;
   const visibleJobs = jobs.slice(start, end);
