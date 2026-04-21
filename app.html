@@ -540,12 +540,12 @@
         fetchJson(`./${DATA_BASE}.week_jobs.json`)
     ]);
 
-    JOBS = jobs || [];
+    JOBS = Array.isArray(jobs) ? jobs : [];
     OPTIONS = options || OPTIONS;
     OPTION_COUNTS = counts || OPTION_COUNTS;
     META = meta || null;
-    TODAY_JOBS = todayJobs || [];
-    WEEK_JOBS = weekJobs || [];
+    TODAY_JOBS = Array.isArray(todayJobs?.jobs) ? todayJobs.jobs : [];
+    WEEK_JOBS = Array.isArray(weekJobs?.jobs) ? weekJobs.jobs : [];
     INSIGHTS = insights || {
      summary: {},
      top_companies: []
@@ -601,7 +601,7 @@ function renderWeekJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const jobs = WEEK_JOBS || [];
+  const jobs = Array.isArray(WEEK_JOBS) ? WEEK_JOBS : [];
   const start = (weekJobsPage - 1) * JOBS_PER_PAGE;
   const end = start + JOBS_PER_PAGE;
   const visibleJobs = jobs.slice(start, end);
@@ -685,7 +685,7 @@ function renderWeekJobs() {
   const content = document.getElementById('insightsContent');
   if (!content) return;
 
-  const jobs = TODAY_JOBS || [];
+  const jobs = Array.isArray(TODAY_JOBS) ? TODAY_JOBS : [];
   const start = (freshJobsPage - 1) * JOBS_PER_PAGE;
   const end = start + JOBS_PER_PAGE;
   const visibleJobs = jobs.slice(start, end);
@@ -1048,7 +1048,7 @@ function renderWeekJobs() {
       } catch (err) {
         console.error(err);
         const rc = document.getElementById("resultCount");
-        if (rc) rc.textContent = "Failed to load JSON data files (check GitHub Pages path).";
+        if (rc) rc.textContent = "Failed to initialize app data. Check console for details.";
       }
 
       document.getElementById('loadMoreBtn')?.addEventListener('click', loadMore);
