@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jobs Index</title>
+  <meta name="description" content="Remote, hybrid and onsite jobs collected daily from company career boards">
+  <meta property="og:title" content="Jobs Index">
+  <meta property="og:description" content="Remote, hybrid and onsite jobs collected daily from company career boards">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://pedrororo.github.io/remote-jobs-index/">
+  <meta property="og:url" content="https://pedrororo.github.io/remote-jobs-index/">
+  
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Jobs Index", "url": "https://pedrororo.github.io/remote-jobs-index/", "description": "Remote, hybrid and onsite jobs collected daily from company career boards", "author": {"@type": "Person", "name": "Pedro Arroyo", "sameAs": ["https://www.linkedin.com/in/pedro-andre-arroyo-silva/"]}}</script>
+  <meta property="og:image" content="https://pedrororo.github.io/remote-jobs-index/preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="app.css?v=20261024T112500Z">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-67RCVE3KLG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-67RCVE3KLG');</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <div class="brand">
+        <h1>Jobs Index</h1>
+        <p class="muted" id="tagline">Loading…</p>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="jobs" aria-selected="true">Jobs</button>
+        <button role="tab" data-tab="insights" aria-selected="false">Insights</button>
+        <button role="tab" data-tab="blog" aria-selected="false">Blog</button>
+        <button role="tab" data-tab="about" aria-selected="false">How it's built</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="tab-jobs" role="tabpanel">
+      <form id="filters" class="filters" autocomplete="off" onsubmit="return false">
+        <input id="q" type="search" placeholder="Search title or company — e.g. “video editor”, “data engineer spark”" aria-label="Search">
+        <div class="filter-row">
+          <label>Category<select id="f-role"></select></label>
+          <label>Region<select id="f-region"></select></label>
+          <label>Country<select id="f-country"></select></label>
+          <label>Workplace<select id="f-workplace"></select></label>
+          <label>Seniority<select id="f-seniority"></select></label>
+          <label>Posted<select id="f-posted">
+            <option value="">Any time</option>
+            <option value="1">Last 24 hours</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+          </select></label>
+          <label>Skill<input id="f-skill" list="skill-list" placeholder="any"></label>
+          <datalist id="skill-list"></datalist>
+          <label>Sort<select id="f-sort">
+            <option value="new">Newest</option>
+            <option value="salary">Highest salary</option>
+          </select></label>
+        </div>
+        <div class="filter-meta">
+          <span id="count" aria-live="polite"></span>
+          <label class="check"><input id="f-salary" type="checkbox"> Salary shown</label>
+          <label class="check"><input id="f-visa" type="checkbox"> Mentions visa</label>
+          <button type="button" id="reset" class="link">Reset filters</button>
+        </div>
+      </form>
+      <div class="jobs-layout">
+        <div class="list">
+          <ol id="results" class="results"><li class="job"><h3><a href="https://lojasrenner.gupy.io/job/eyJqb2JJZCI6MTI3NzkwOTAsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">|LOJAS RENNER| Jovem Aprendiz - SH TAGUATINGA/ DF</a></h3><div class="line">Lojas Renner · Brasília, Distrito Federal, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://weworkremotely.com/remote-jobs/gusto-inc-payment-operations-analyst" rel="nofollow noopener" target="_blank">Gusto, Inc.: Payment Operations Analyst</a></h3><div class="line">Anywhere in the World · Remote · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.smartrecruiters.com/SWIGGY/6000000001518966-assistant-manager-warehouse" rel="nofollow noopener" target="_blank">Assistant Manager - Warehouse</a></h3><div class="line">Swiggy · Ahmedabad, GJ, India · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://carajas.gupy.io/job/eyJqb2JJZCI6MTI3Nzg4MzcsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">Gerente de Logística - Natal</a></h3><div class="line">Carajás Home Center · São Gonçalo do Amarante, Rio Grande do Norte, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://lojaspanvel.gupy.io/job/eyJqb2JJZCI6MTI3Nzg3NTQsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">AJUDANTE DE LIMPEZA - BAIRRO CENTRO I | BRUSQUE/SC ( ESCALA 5X2 )</a></h3><div class="line">Grupo Panvel · Brusque, Santa Catarina, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://intelipost.gupy.io/job/eyJqb2JJZCI6MTI3Nzg3MTcsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">Analista de Operações de Transportes</a></h3><div class="line">Intelipost · São Paulo, São Paulo, Brazil · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.ashbyhq.com/openai/c9832989-edc1-4f2f-8a79-8fa29f5623e2" rel="nofollow noopener" target="_blank">Procurement Operations Specialist</a></h3><div class="line">OpenAI · San Francisco · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.ashbyhq.com/openai/395e9fe2-4d78-42dd-b3f7-603884915a59" rel="nofollow noopener" target="_blank">Senior Manager, Supplier MDM Operations</a></h3><div class="line">OpenAI · San Francisco · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://job-boards.greenhouse.io/xai/jobs/5273297007" rel="nofollow noopener" target="_blank">Sr. Manager, Power Plant Operations - Memphis</a></h3><div class="line">xAI · Southaven, MS; Memphis, TN · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://smagalhaes.vagas.solides.com.br/vaga/y3Bb0oiSEh" rel="nofollow noopener" target="_blank">AUXILIAR DE SERVICOS GERAIS</a></h3><div class="line">SMagalhães S.A. Logística em Comercio Exterior · GUARUJA, SP, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://gartner.wd5.myworkdayjobs.com/EXT/job/Remote---Texas/Executive-Supply-Chain-Leader--Executive-Partner---High-Tech_114305" rel="nofollow noopener" target="_blank">Executive Supply Chain Leader: Executive Partner - High Tech</a></h3><div class="line">Gartner · Remote - Texas · Remote · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://juliusbaer.wd3.myworkdayjobs.com/External/job/Zurich/Senior-Management-Assistant-100---f-m-d-_r-20002-1" rel="nofollow noopener" target="_blank">Management Team Assistant, Global Products &amp; Solutions 100 % (f/m/d)</a></h3><div class="line">Juliusbaer · Zurich · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://magna.wd3.myworkdayjobs.com/MAGNA/job/Troy-Michigan-US/Executive-Assistant_R00266960-1" rel="nofollow noopener" target="_blank">Executive Assistant</a></h3><div class="line">Magna · Troy, Michigan, US · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://weworkremotely.com/remote-jobs/beyondtrust-federal-account-manager-combatant-commands" rel="nofollow noopener" target="_blank">BeyondTrust: Federal Account Manager, Combatant Commands</a></h3><div class="line">Anywhere in the World · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.smartrecruiters.com/SWIGGY/6000000001519000-sales-manager-" rel="nofollow noopener" target="_blank">Sales Manager</a></h3><div class="line">Swiggy · Hyderabad, TS, India · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.smartrecruiters.com/SWIGGY/6000000001518995-sales-manager" rel="nofollow noopener" target="_blank">Sales Manager</a></h3><div class="line">Swiggy · Tiruppur, TN, India · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://job-boards.greenhouse.io/anthropic/jobs/5448366008" rel="nofollow noopener" target="_blank">Enterprise Account Executive - Manufacturing Industries, Taiwan</a></h3><div class="line">Anthropic · Singapore · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153966-account-executive-new-business-financial-services" rel="nofollow noopener" target="_blank">Account Executive, New Business – Financial Services</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153960-account-executive-existing-business-financial-services" rel="nofollow noopener" target="_blank">Account Executive, Existing Business – Financial Services</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153954-enterprise-account-executive-nyc" rel="nofollow noopener" target="_blank">Enterprise Account Executive – NYC</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153933-account-executive-24" rel="nofollow noopener" target="_blank">Account Executive</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153950-enterprise-account-executive-matl" rel="nofollow noopener" target="_blank">Enterprise Account Executive – MATL</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153938-manager-enterprise-partnerships-financial-services" rel="nofollow noopener" target="_blank">Manager, Enterprise Partnerships – Financial Services</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/153936-business-development-representative-15" rel="nofollow noopener" target="_blank">Business Development Representative</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://lojasrenner.gupy.io/job/eyJqb2JJZCI6MTI3Nzg3NzEsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">|LOJAS RENNER| Assistente de Vendas - SH PARK LAGOS CABO FRIO</a></h3><div class="line">Lojas Renner · Cabo Frio, Rio de Janeiro, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://www.samsara.com/company/careers/roles/8319798?gh_jid=8319798" rel="nofollow noopener" target="_blank">Account Executive, Mid Market (West)</a></h3><div class="line">Samsara · San Francisco, CA, United States · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://www.samsara.com/company/careers/roles/8319797?gh_jid=8319797" rel="nofollow noopener" target="_blank">Account Executive, Mid Market (West)</a></h3><div class="line">Samsara · Phoenix, Arizona, United States · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://renner.gupy.io/job/eyJqb2JJZCI6MTI3Nzg3MzksInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=" rel="nofollow noopener" target="_blank">Assistente de Loja/Vendas</a></h3><div class="line">Lojas Renner S.A. · Boa Vista, Roraima, Brazil · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://www.samsara.com/company/careers/roles/8319788?gh_jid=8319788" rel="nofollow noopener" target="_blank">Account Executive, Mid Market (Midwest)</a></h3><div class="line">Samsara · Remote - OH · Remote · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobs.ashbyhq.com/factory/c8cd8419-202c-46e3-8650-7684cef9c353" rel="nofollow noopener" target="_blank">VP Sales, West Enterprise</a></h3><div class="line">Factory · San Francisco, CA · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/Austin-Texas-US/Virtual-Sales-Account-Executive---Splunk--Portuguese-Speaking--Remote-_2027337" rel="nofollow noopener" target="_blank">Virtual Sales Account Executive - Splunk -Portuguese Speaking (Remote)</a></h3><div class="line">Cisco · Austin, Texas, US · Remote · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/London-United-Kingdom/Account-Executive---Services_2027825" rel="nofollow noopener" target="_blank">Account Executive - Services</a></h3><div class="line">Cisco · London, United Kingdom · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://gartner.wd5.myworkdayjobs.com/EXT/job/Remote---California/Senior-Account-Executive--LE-GE-GTS_114802" rel="nofollow noopener" target="_blank">Senior Account Executive, LE/GE GTS</a></h3><div class="line">Gartner · Remote - California · Remote · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://gartner.wd5.myworkdayjobs.com/EXT/job/Montreal/Account-Executive--GTS--LE---Directeur-trice--de-comptes--GTS--Grands-Comptes_115375" rel="nofollow noopener" target="_blank">Account Executive, GTS, LE / Directeur(trice) de comptes, GTS, Grands Comptes</a></h3><div class="line">Gartner · Montreal · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://gartner.wd5.myworkdayjobs.com/EXT/job/London/Business-Development-Executive--LE--GBS_114263" rel="nofollow noopener" target="_blank">Business Development Executive, LE, GBS</a></h3><div class="line">Gartner · London · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://gartner.wd5.myworkdayjobs.com/EXT/job/London/Business-Development-Executive--LE--GBS_114513" rel="nofollow noopener" target="_blank">Business Development Executive, LE, GBS</a></h3><div class="line">Gartner · London · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://verizon.wd12.myworkdayjobs.com/verizon-careers/job/London-United-Kingdom/Presales-Solution-Architect_R-1100655-1" rel="nofollow noopener" target="_blank">Presales Solution Architect</a></h3><div class="line">Verizon · London, United Kingdom · Hybrid · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://abbott.wd5.myworkdayjobs.com/AbbottCareers/job/United-Arab-Emirates---Dubai/Medical-Sales-Intern_31165177" rel="nofollow noopener" target="_blank">Medical Sales Intern</a></h3><div class="line">Abbott · United Arab Emirates - Dubai · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/Singapore-Singapore/Inside-Account-Executive_2027543" rel="nofollow noopener" target="_blank">Inside Account Executive</a></h3><div class="line">Cisco · Singapore, Singapore · Onsite · <time datetime="2026-10-24">2026-10-24</time></div></li><li class="job"><h3><a href="https://jobicy.com/jobs/151434-account-manager-mid-market" rel="nofollow noopener" target="_blank">Account Manager | Mid-Market</a></h3><div class="line"> · <time datetime="2026-10-24">2026-10-24</time></div></li></ol>
+          <div class="more"><button id="more" type="button" hidden>Show more</button></div>
+        </div>
+        <aside class="side" aria-label="Job summary and contact">
+          <div class="side-inner">
+            <div id="side-job" class="side-card" aria-live="polite"><p class="muted">Hover over a job to see its summary here.</p></div>
+            <div id="contact" class="side-card contact" hidden></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tab-insights" role="tabpanel" hidden>
+      <div id="tiles" class="tiles"></div>
+      <div class="grid">
+        <figure class="card"><figcaption>Jobs by category</figcaption><div id="c-role"></div></figure>
+        <figure class="card"><figcaption>Workplace mix by region</figcaption><div id="c-mix"></div></figure>
+        <figure class="card"><figcaption>Most requested skills</figcaption><div id="c-skills"></div></figure>
+        <figure class="card"><figcaption>Countries with the most jobs</figcaption><div id="c-country"></div></figure>
+        <figure class="card"><figcaption>Countries with the most remote jobs</figcaption><div id="c-remote"></div></figure>
+        <figure class="card"><figcaption>Companies hiring most</figcaption><div id="c-company"></div></figure>
+        <figure class="card wide"><figcaption>Jobs posted per day (last 60 days)</figcaption><div id="c-days"></div></figure>
+        <figure class="card"><figcaption>Median advertised salary, USD/year</figcaption><div id="c-salary"></div></figure>
+        <figure class="card"><figcaption>Seniority</figcaption><div id="c-seniority"></div></figure>
+      </div>
+
+      <div id="lifecycle" hidden>
+        <h2 class="section-title">Job lifecycle</h2>
+        <p class="muted lc-note" id="lc-note"></p>
+        <div id="lc-tiles" class="tiles"></div>
+        <div class="grid">
+          <figure class="card wide"><figcaption>New postings and closures per day</figcaption><div id="c-lc-days"></div></figure>
+          <figure class="card"><figcaption>How long jobs stay open, by role</figcaption><div id="c-lc-ttc"></div></figure>
+          <figure class="card"><figcaption>Data quality, last run</figcaption><div id="c-lc-quality"></div></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-blog" role="tabpanel" hidden>
+      <div class="blog-tab">
+        <h2>Blog</h2>
+        <p class="lead">What the daily job data shows: hiring by country, remote work, skills and salaries.</p>
+        <ol class="post-list"><li class="post-item"><h3><a href="blog/how-many-jobs-are-really-remote/">Only 9% of open jobs are fully remote. Here is where they are</a></h3><div class="line"><time datetime="2026-10-23">October 23, 2026</time> · 3 min read</div><p class="muted">We counted 268,835 open positions from 11,041 companies. Fewer than one in ten is fully remote, and the share changes a lot from one country to another.</p></li></ol>
+      </div>
+    </section>
+
+    <section id="tab-about" role="tabpanel" hidden>
+      <div class="about">
+        <div class="about-intro">
+          <h2>How this index is built</h2>
+          <p>I'm Pedro A. A. Silva, a data engineer. I built this index and run it every day: a pipeline that collects
+            job postings from public career boards, turns them into one clean dataset and publishes it here.
+            This page explains what the pipeline does and how it's built. The code is private.</p>
+        </div>
+        <div id="about-tiles" class="tiles"></div>
+
+        <h3>From career boards to this page</h3>
+        <ol class="flow">
+          <li><strong>Collect</strong><span>Company career boards (ATS), job platforms, APIs and feeds, read in parallel within each source's rate limits.</span></li>
+          <li><strong>Clean &amp; enrich</strong><span>Each source's format becomes one schema: text, salary, location, remote scope, seniority, skills and category.</span></li>
+          <li><strong>Deduplicate</strong><span>The same job posted on several sources counts once.</span></li>
+          <li><strong>Track changes</strong><span>Every run is a snapshot. Each job keeps its history: first seen, updates and closing date.</span></li>
+          <li><strong>Model</strong><span>A lakehouse with bronze, silver and gold layers, modelled in dbt. It runs on DuckDB locally and on Databricks (Delta Lake) in the cloud.</span></li>
+          <li><strong>Publish</strong><span>A daily scheduled workflow checks the data and publishes this static site.</span></li>
+        </ol>
+
+        <h3>Stack</h3>
+        <ul class="tech-stack">
+          <li>Python</li><li>SQL</li><li>dbt</li><li>DuckDB</li><li>Databricks</li><li>Delta Lake</li>
+          <li>PySpark</li><li>Auto Loader</li><li>SCD Type 2</li><li>GitHub Actions</li><li>Static site (HTML/JS)</li>
+        </ul>
+
+        <h3>A note on infrastructure</h3>
+        <p class="about-note">I wanted to keep this project simple and avoid spending money on infrastructure.</p>
+        <p class="about-note">The pipeline runs on free GitHub Actions runners, stores its state in GitHub release files, publishes
+          the website through GitHub Pages, and uses a free Databricks workspace.</p>
+        <p class="about-note">No servers to manage, no paid databases, and no hosting costs.</p>
+        <p class="about-note">Instead, I focused my time on what matters most: collecting reliable data, cleaning it, keeping
+          historical records, and checking data quality.</p>
+        <p class="about-note">The pipeline already runs on Databricks, so if I need more computing power later, I can scale up
+          without having to redesign everything.</p>
+
+        <h3>Challenges and how I solved them</h3>
+        <div class="grid challenges">
+          <div class="card"><strong>Thousands of career boards, each different</strong>
+            <p><b>Challenge:</b> every ATS and job platform has its own API, format, rate limits and failure modes.</p>
+            <p><b>Solution:</b> one small, pluggable collector per source. Each one runs in parallel with its own timeout and
+              worker limit and maps the result to one shared schema.</p></div>
+          <div class="card"><strong>Finding where companies post their jobs</strong>
+            <p><b>Challenge:</b> companies embed their job boards on career pages in many different ways.</p>
+            <p><b>Solution:</b> discovery tools that inspect career pages and detect the board behind them. A board is only
+              added after its answers are verified, and conflicts go to manual review instead of overwriting data.</p></div>
+          <div class="card"><strong>The same job, many times</strong>
+            <p><b>Challenge:</b> one posting shows up on several sources, gets reposted, or comes back from a new source as if it
+              were new.</p>
+            <p><b>Solution:</b> a stable identity and a content fingerprint for every job. That separates a really new job
+              from a new source, and a real closing from a gap in one day's run.</p></div>
+          <div class="card"><strong>Knowing what changed, day by day</strong>
+            <p><b>Challenge:</b> a list of today's jobs says nothing about which are new, which changed or how long they stay open.</p>
+            <p><b>Solution:</b> immutable daily snapshots turned into a full history (SCD Type 2). That gives first-seen and
+              closing dates, plus a Kaplan-Meier estimate of how long jobs stay open that still counts the ones that are open.</p></div>
+          <div class="card"><strong>Keeping a bad run off the site</strong>
+            <p><b>Challenge:</b> a source can fail quietly and a run can come back half empty.</p>
+            <p><b>Solution:</b> each run is compared with the previous ones: failed or empty sources, volume drops, gaps,
+              slow runs. A run that collapses never replaces the published site, and errors fail the workflow.</p></div>
+          <div class="card"><strong>Same models, laptop and cloud</strong>
+            <p><b>Challenge:</b> develop cheaply on a laptop and still run on a real cloud platform.</p>
+            <p><b>Solution:</b> one set of dbt models that builds the lakehouse on DuckDB locally and on Databricks (Delta Lake,
+              Auto Loader, incremental MERGE). Both were checked to give identical results.</p></div>
+          <div class="card"><strong>Big data on a small machine</strong>
+            <p><b>Challenge:</b> the daily build runs on a free CI machine with about 7 GB of memory.</p>
+            <p><b>Solution:</b> streaming and batching instead of loading everything at once cut peak memory from 5.05 GB to
+              2.81 GB.</p></div>
+          <div class="card"><strong>Messy text</strong>
+            <p><b>Challenge:</b> salaries in many currencies and periods, locations like “Remote (LATAM)”, one skill written ten ways.</p>
+            <p><b>Solution:</b> parsers and a taxonomy normalize each field and record how confident they are. Values that
+              can't be read stay unknown instead of being guessed.</p></div>
+        </div>
+
+        <div id="about-contact" class="side-card contact about-contact">
+          <strong>Need something like this for your data?</strong>
+          <p>I'm open to data engineering roles (full-time or contract) and to data and automation projects.</p>
+          <div class="contact-links" id="about-links"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="jobs-foot" class="wrap muted foot">
+    <p id="updated"></p>
+    <p><a href="jobs/">Browse jobs by category and country</a></p>
+    <p>Jobs are collected automatically from public company career boards. Summaries are short extracts; always read and apply on the original posting.</p>
+  </footer>
+  <div id="tip" class="tip" hidden></div>
+  <script src="app.js?v=20261024T112500Z"></script>
+</body>
+</html>

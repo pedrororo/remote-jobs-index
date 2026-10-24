@@ -1,0 +1,110 @@
+{
+ "generated_at": "2026-10-24T11:24:50+00:00",
+ "source": "databricks",
+ "as_of": "2026-10-24",
+ "daily": [
+  {
+   "date": "2026-10-22",
+   "opened": 15240,
+   "opened_new_sources": 100880,
+   "closed": 0,
+   "reopened": 319
+  },
+  {
+   "date": "2026-10-23",
+   "opened": 8941,
+   "opened_new_sources": 2916,
+   "closed": 0,
+   "reopened": 171
+  },
+  {
+   "date": "2026-10-24",
+   "opened": 4630,
+   "opened_new_sources": 35136,
+   "closed": 0,
+   "reopened": 39
+  }
+ ],
+ "time_to_close": {
+  "all": {
+   "jobs": 28811,
+   "closed": 0,
+   "still_open": 28811,
+   "median_days": null,
+   "open_after_7d": null,
+   "open_after_30d": null
+  },
+  "by_role": [
+   {
+    "value": "other",
+    "jobs": 11144,
+    "closed": 0,
+    "still_open": 11144,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_engineering",
+    "jobs": 450,
+    "closed": 0,
+    "still_open": 450,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "software_engineering",
+    "jobs": 413,
+    "closed": 0,
+    "still_open": 413,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "cybersecurity",
+    "jobs": 407,
+    "closed": 0,
+    "still_open": 407,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_science",
+    "jobs": 368,
+    "closed": 0,
+    "still_open": 368,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "devops_platform",
+    "jobs": 283,
+    "closed": 0,
+    "still_open": 283,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "sales_development",
+    "jobs": 221,
+    "closed": 0,
+    "still_open": 221,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   }
+  ]
+ },
+ "quality": {
+  "run_at": "2026-10-24T02:34:47Z",
+  "sources": 11,
+  "sources_ok": 11,
+  "errors": 0,
+  "warnings": 0
+ }
+}
