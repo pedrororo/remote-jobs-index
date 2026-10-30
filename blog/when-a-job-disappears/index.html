@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When a job disappears: did it close, or did my pipeline fail? | Jobs Index</title>
+<meta name="description" content="A missing job posting can mean a closed role, a failed collection, or an incomplete feed. Here is how my remote jobs pipeline handles that uncertainty.">
+<link rel="canonical" href="https://pedrororo.github.io/remote-jobs-index/blog/when-a-job-disappears/">
+<meta property="og:title" content="When a job disappears: did it close, or did my pipeline fail? | Jobs Index">
+<meta property="og:description" content="A missing job posting can mean a closed role, a failed collection, or an incomplete feed. Here is how my remote jobs pipeline handles that uncertainty.">
+<meta property="og:url" content="https://pedrororo.github.io/remote-jobs-index/blog/when-a-job-disappears/">
+<meta property="og:type" content="article">
+
+<meta property="article:published_time" content="2026-10-26">
+<link rel="alternate" type="application/rss+xml" title="Jobs Index blog" href="https://pedrororo.github.io/remote-jobs-index/blog/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "When a job disappears: did it close, or did my pipeline fail?", "description": "A missing job posting can mean a closed role, a failed collection, or an incomplete feed. Here is how my remote jobs pipeline handles that uncertainty.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "inLanguage": "en", "url": "https://pedrororo.github.io/remote-jobs-index/blog/when-a-job-disappears/", "mainEntityOfPage": "https://pedrororo.github.io/remote-jobs-index/blog/when-a-job-disappears/", "author": {"@type": "Person", "name": "Pedro Arroyo", "sameAs": ["https://www.linkedin.com/in/pedro-andre-arroyo-silva/"]}, "publisher": {"@type": "Organization", "name": "Jobs Index", "url": "https://pedrororo.github.io/remote-jobs-index/"}}</script>
+<link rel="stylesheet" href="../../app.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-67RCVE3KLG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-67RCVE3KLG');</script>
+</head>
+<body class="static">
+<header class="top"><div class="wrap top-row"><div class="brand">
+<p class="site-name"><a href="../../">Jobs Index</a></p>
+<p class="muted">Remote, hybrid and onsite jobs collected daily from company career boards</p></div></div></header>
+<main class="wrap static-main">
+<nav class="crumbs"><a href="../../">Jobs</a> › <a href="../">Blog</a></nav><article class="post"><h1>When a job disappears: did it close, or did my pipeline fail?</h1><p class="post-meta muted"><time datetime="2026-10-26">October 26, 2026</time> · 4 min read</p><p>Yesterday, a job appeared in my index. Today, it is gone.</p>
+<p>Did the company stop hiring? Did the source stop returning it? Or did something break in my pipeline?</p>
+<p>All three can produce the same result: a missing record. But they tell very different stories to someone searching for work, or reading a chart about the job market.</p>
+<p>While building the <a href="../../">Jobs Index</a>, I had to decide what evidence was enough to mark a posting as closed. Comparing yesterday's records with today's was only the starting point.</p>
+<h2 id="missing-is-an-observation-closed-is-an-inference">Missing is an observation. Closed is an inference.</h2>
+<p>A daily collection tells me which postings my pipeline observed at a particular time. It does not give me a complete account of what happened at each employer.</p>
+<p>A posting might disappear because:</p>
+<ul><li>The employer removed it from its career board.</li><li>A request failed or returned an incomplete response.</li><li>A parser stopped recognizing part of the response.</li><li>An older posting fell out of a feed that only includes recent items.</li><li>I changed which sources the pipeline collects.</li></ul>
+<p>If I turn every disappearance into a closure, a collection problem can become an apparent drop in hiring.</p>
+<p>So the lifecycle tracker keeps an intermediate state: <code>POSSIBLY_CLOSED</code>.</p>
+<h2 id="first-check-whether-absence-is-meaningful">First, check whether absence is meaningful</h2>
+<p>Before counting a missing observation against a job, my tracker checks two things:</p>
+<ol><li>Did the job's collector report a successful run?</li><li>Did that same collector return at least one posting for the same company?</li></ol>
+<p>If either answer is no, the tracker preserves the job's previous state. That run does not add a miss.</p>
+<p>The second check matters because one collector can cover many companies. Getting results from company A does not prove that company B's board was collected correctly.</p>
+<p>This is a conservative rule with a tradeoff: if a company removes its very last posting, there are no remaining jobs to confirm that company's coverage. The tracker may preserve an old status rather than infer a closure from silence.</p>
+<p>Even when both checks pass, a partial response can still hide a job. These checks make an absence more useful as evidence; they do not make it certain.</p>
+<h2 id="three-misses-need-a-clock">Three misses need a clock</h2>
+<p>By default, my pipeline requires at least <strong>three qualifying misses</strong> and <strong>36 hours since the first miss</strong> before marking a job as <code>CLOSED</code>.</p>
+<p>Why both?</p>
+<p>Counting runs alone lets three manual reruns turn a few hours of absence into a closure. Elapsed time prevents those reruns from compressing the waiting period.</p>
+<p>Here is an illustrative timeline, assuming each collection passes the checks above:</p>
+<div class="table-wrap"><table><thead><tr><th>Observation</th><th>What the pipeline sees</th><th>Lifecycle state</th></tr></thead><tbody><tr><td>Monday, 08:00</td><td>Posting present</td><td>OPEN</td></tr><tr><td>Tuesday, 08:00</td><td>First miss</td><td>POSSIBLY_CLOSED</td></tr><tr><td>Tuesday, 10:00</td><td>Second miss</td><td>POSSIBLY_CLOSED</td></tr><tr><td>Tuesday, 12:00</td><td>Third miss, only four hours elapsed</td><td>POSSIBLY_CLOSED</td></tr><tr><td>Wednesday, 08:00</td><td>Fourth miss, 24 hours elapsed</td><td>POSSIBLY_CLOSED</td></tr><tr><td>Thursday, 08:00</td><td>Still missing, 48 hours elapsed</td><td>CLOSED</td></tr></tbody></table></div>
+<p>If the posting returns before closure, its state goes back to <code>OPEN</code>, the miss counter resets, and the tracker records <code>JOB_RETURNED</code>. If it returns after closure, it records <code>JOB_REOPENED</code>.</p>
+<p>Keeping those events means I can reconstruct what the pipeline observed over time, including when an earlier inference changed.</p>
+<h2 id="a-successful-request-can-still-produce-bad-data">A successful request can still produce bad data</h2>
+<p>Lifecycle rules handle individual postings. I also need checks on the collection as a whole.</p>
+<p>The pipeline compares source and total job counts with the median of the previous seven runs. It flags failed sources, unexpected empty results, and large volume drops.</p>
+<p>If the total collection falls below half that recent median, the normal publishing workflow skips replacing the public site. The previous version stays online.</p>
+<p>There are limits: source alerts alone do not block publishing, and publishing can proceed if the quality-check step itself fails. The gate protects against a detected collapse in total collection volume; it does not guarantee a complete dataset.</p>
+<h2 id="the-source-changes-what-disappearance-means">The source changes what disappearance means</h2>
+<p>A company career board and an RSS feed can both return job postings, but their absences mean different things.</p>
+<p>A career board generally aims to list current openings. Repeated absence there is useful evidence that a posting was removed. An RSS feed may only contain the newest entries, so a job can disappear while applications remain open.</p>
+<p>That distinction matters when interpreting lifecycle charts. A feed's retention window can look like a very short hiring cycle if I treat every disappearance as an employer decision.</p>
+<p>And even a posting removed from a career board does not tell me whether someone was hired. The employer might have paused the search, withdrawn the role, or replaced the listing.</p>
+<p>In this project, <code>CLOSED</code> is a lifecycle classification based on observations. It is not confirmation of a hire or the exact moment applications ended.</p>
+<h2 id="what-i-want-readers-to-be-able-to-trust">What I want readers to be able to trust</h2>
+<p>My <a href="../how-many-jobs-are-really-remote/">previous article</a> looked at the share of collected jobs labeled fully remote. Questions about openings and closures require another layer of care: knowing whether a change came from employers or from my own collection process.</p>
+<p>Building that distinction into the pipeline has meant tracking source health, preserving history, allowing uncertain states, and defining what each metric can actually support.</p>
+<p>When a number changes, I want to be able to explain the evidence behind it.</p>
+<p><strong>How do you handle missing records in a recurring pipeline? What evidence do you require before treating an absence as a deletion?</strong></p></article><p class="post-cta"><a href="../../">Search all open jobs →</a></p><h2>More from the blog</h2><ol class="post-list"><li class="post-item"><h3><a href="../my-pipeline-ran-out-of-memory/">My pipeline ran out of memory at 149k jobs. Now it fetches 400k in under 3.5 GB</a></h3><div class="line"><time datetime="2026-10-28">October 28, 2026</time> · 4 min read</div><p class="muted">The daily jobs pipeline was killed by its GitHub runner at 7.2 GB. Measuring, fingerprints and streaming to disk brought the peak under 3.5 GB while the dataset grew past 400,000 jobs.</p></li><li class="post-item"><h3><a href="../how-many-jobs-are-really-remote/">Only 9% of open jobs are fully remote. Here is where they are</a></h3><div class="line"><time datetime="2026-10-23">October 23, 2026</time> · 3 min read</div><p class="muted">We counted 268,835 open positions from 11,041 companies. Fewer than one in ten is fully remote, and the share changes a lot from one country to another.</p></li></ol>
+</main>
+<footer class="wrap muted foot"><p>Jobs are collected automatically from public company career boards.
+Always read and apply on the original posting.</p></footer>
+</body>
+</html>

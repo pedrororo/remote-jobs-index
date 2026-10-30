@@ -1,0 +1,145 @@
+{
+ "generated_at": "2026-10-30T14:39:34+00:00",
+ "source": "databricks",
+ "as_of": "2026-10-29",
+ "daily": [
+  {
+   "date": "2026-10-22",
+   "opened": 15240,
+   "opened_new_sources": 100880,
+   "closed": 0,
+   "reopened": 319
+  },
+  {
+   "date": "2026-10-23",
+   "opened": 8941,
+   "opened_new_sources": 2916,
+   "closed": 0,
+   "reopened": 171
+  },
+  {
+   "date": "2026-10-24",
+   "opened": 4826,
+   "opened_new_sources": 35138,
+   "closed": 12497,
+   "reopened": 165
+  },
+  {
+   "date": "2026-10-25",
+   "opened": 669,
+   "opened_new_sources": 17,
+   "closed": 7227,
+   "reopened": 16
+  },
+  {
+   "date": "2026-10-26",
+   "opened": 10644,
+   "opened_new_sources": 81361,
+   "closed": 4867,
+   "reopened": 504
+  },
+  {
+   "date": "2026-10-27",
+   "opened": 13443,
+   "opened_new_sources": 101468,
+   "closed": 1559,
+   "reopened": 487
+  },
+  {
+   "date": "2026-10-28",
+   "opened": 17255,
+   "opened_new_sources": 15656,
+   "closed": 10012,
+   "reopened": 533
+  },
+  {
+   "date": "2026-10-29",
+   "opened": 39913,
+   "opened_new_sources": 23703,
+   "closed": 10926,
+   "reopened": 1282
+  }
+ ],
+ "time_to_close": {
+  "all": {
+   "jobs": 110931,
+   "closed": 4838,
+   "still_open": 106093,
+   "median_days": null,
+   "open_after_7d": null,
+   "open_after_30d": null
+  },
+  "by_role": [
+   {
+    "value": "other",
+    "jobs": 54289,
+    "closed": 2206,
+    "still_open": 52083,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "software_engineering",
+    "jobs": 2212,
+    "closed": 156,
+    "still_open": 2056,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_engineering",
+    "jobs": 2151,
+    "closed": 130,
+    "still_open": 2021,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "cybersecurity",
+    "jobs": 2022,
+    "closed": 124,
+    "still_open": 1898,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_science",
+    "jobs": 1599,
+    "closed": 111,
+    "still_open": 1488,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "devops_platform",
+    "jobs": 1315,
+    "closed": 78,
+    "still_open": 1237,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   },
+   {
+    "value": "sales_development",
+    "jobs": 1041,
+    "closed": 96,
+    "still_open": 945,
+    "median_days": null,
+    "open_after_7d": null,
+    "open_after_30d": null
+   }
+  ]
+ },
+ "quality": {
+  "run_at": "2026-10-29T16:18:18Z",
+  "sources": 11,
+  "sources_ok": 11,
+  "errors": 0,
+  "warnings": 0
+ }
+}

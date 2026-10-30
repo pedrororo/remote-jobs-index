@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My pipeline ran out of memory at 149k jobs. Now it fetches 400k in under 3.5 GB | Jobs Index</title>
+<meta name="description" content="The daily jobs pipeline was killed by its GitHub runner at 7.2 GB. Measuring, fingerprints and streaming to disk brought the peak under 3.5 GB while the dataset grew past 400,000 jobs.">
+<link rel="canonical" href="https://pedrororo.github.io/remote-jobs-index/blog/my-pipeline-ran-out-of-memory/">
+<meta property="og:title" content="My pipeline ran out of memory at 149k jobs. Now it fetches 400k in under 3.5 GB | Jobs Index">
+<meta property="og:description" content="The daily jobs pipeline was killed by its GitHub runner at 7.2 GB. Measuring, fingerprints and streaming to disk brought the peak under 3.5 GB while the dataset grew past 400,000 jobs.">
+<meta property="og:url" content="https://pedrororo.github.io/remote-jobs-index/blog/my-pipeline-ran-out-of-memory/">
+<meta property="og:type" content="article">
+
+<meta property="article:published_time" content="2026-10-28">
+<link rel="alternate" type="application/rss+xml" title="Jobs Index blog" href="https://pedrororo.github.io/remote-jobs-index/blog/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "My pipeline ran out of memory at 149k jobs. Now it fetches 400k in under 3.5 GB", "description": "The daily jobs pipeline was killed by its GitHub runner at 7.2 GB. Measuring, fingerprints and streaming to disk brought the peak under 3.5 GB while the dataset grew past 400,000 jobs.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "inLanguage": "en", "url": "https://pedrororo.github.io/remote-jobs-index/blog/my-pipeline-ran-out-of-memory/", "mainEntityOfPage": "https://pedrororo.github.io/remote-jobs-index/blog/my-pipeline-ran-out-of-memory/", "author": {"@type": "Person", "name": "Pedro Arroyo", "sameAs": ["https://www.linkedin.com/in/pedro-andre-arroyo-silva/"]}, "publisher": {"@type": "Organization", "name": "Jobs Index", "url": "https://pedrororo.github.io/remote-jobs-index/"}}</script>
+<link rel="stylesheet" href="../../app.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-67RCVE3KLG"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-67RCVE3KLG');</script>
+</head>
+<body class="static">
+<header class="top"><div class="wrap top-row"><div class="brand">
+<p class="site-name"><a href="../../">Jobs Index</a></p>
+<p class="muted">Remote, hybrid and onsite jobs collected daily from company career boards</p></div></div></header>
+<main class="wrap static-main">
+<nav class="crumbs"><a href="../../">Jobs</a> › <a href="../">Blog</a></nav><article class="post"><h1>My pipeline ran out of memory at 149k jobs. Now it fetches 400k in under 3.5 GB</h1><p class="post-meta muted"><time datetime="2026-10-28">October 28, 2026</time> · 4 min read</p><p>The <a href="../../">Jobs Index</a> is rebuilt every day by a GitHub Actions workflow. The runner it uses has about <strong>7 GB of RAM</strong>.</p>
+<p>At around 149,000 jobs, the fetch step peaked at <strong>7.2 GB</strong>. Then the first run with Brazil's Gupy listings didn't fail with an error. It just stopped:</p>
+<blockquote><p>runner received a shutdown signal</p></blockquote>
+<p>No stack trace, no failing line. The machine ran out of memory, and the operating system ended the job.</p>
+<p>Today the same step collects about 400,000 jobs and peaks between 2.8 and 3.3 GB. Here is what changed, in the order I did it.</p>
+<h2 id="first-make-memory-a-number">First, make memory a number</h2>
+<p>You can't tell whether a fix worked if the only signal is "the run survived this time".</p>
+<p>The fetch step now runs under <code>/usr/bin/time -v</code>, and a report step prints the <strong>maximum resident set size</strong> after every run, even a failed one. Memory became a metric I can compare between runs, like job counts or duration.</p>
+<p>I also added 6 GB of swap to the runner. That is a safety margin, not a fix: with swap, a run that goes over the limit gets slower instead of being killed. The goal is still to stay below 7 GB without it.</p>
+<h2 id="store-a-fingerprint-not-the-data">Store a fingerprint, not the data</h2>
+<p>The lifecycle tracker (the part that decides when a posting has <a href="../when-a-job-disappears/">closed</a>) needs to notice when a job's description changes. To do that, it kept every description it had seen.</p>
+<p>But it never read those texts. It only compared them. A <strong>sha256 fingerprint</strong> of each description answers the same question in a few dozen bytes.</p>
+<p>That change took the lifecycle state from <strong>1.3 GB to 245 MB</strong> (48 MB compressed). The peak fell to 6.15 GB.</p>
+<h2 id="drop-raw-data-as-soon-as-it-s-used">Drop raw data as soon as it's used</h2>
+<p>Many career boards return job descriptions as HTML. The pipeline converts them to plain text and never needs the HTML again, but it was keeping both copies until the end of the run.</p>
+<p>Dropping the HTML right after conversion saved about <strong>1.5 GB</strong>.</p>
+<p>I couldn't measure that run cleanly, though. The enrichment cache key includes a hash of the code that does the enrichment, so my change to the description code made the next run recompute every job. That run was slower and used more memory for reasons unrelated to the fix. A measurement is only useful if the rest of the run stays the same.</p>
+<h2 id="trimming-was-not-enough">Trimming was not enough</h2>
+<p>Those fixes bought headroom, but they didn't change the shape of the problem. Every job, with its description, was still in memory at once, along with the copies made by history, enrichment and the exports. <strong>Peak memory grew in a straight line with the number of jobs.</strong></p>
+<p>That is a bad property for a project whose goal is to keep adding sources. Each new company would bring the next shutdown closer.</p>
+<h2 id="stream-don-t-collect">Stream, don't collect</h2>
+<p>The fix that changed the shape was to stop holding the whole dataset in memory.</p>
+<ul><li>As each fetcher (or each company board) returns its jobs, the pipeline does all the per-job work right away: the raw snapshot, dropping the HTML, recovering missing company names, the lifecycle observation and the publication filters.</li><li>Jobs that will be published go to a <strong>spool on disk</strong>. Only small per-job records stay in memory.</li><li>The export reads the spool back <strong>in batches</strong>, newest first, so only one batch of full, enriched jobs is in memory at a time.</li></ul>
+<p>New fetchers accept a callback that hands jobs over as they arrive, so they stream too.</p>
+<h2 id="the-numbers">The numbers</h2>
+<div class="table-wrap"><table><thead><tr><th>Run</th><th class="num">Jobs</th><th class="num">Peak memory</th></tr></thead><tbody><tr><td>Before any fix</td><td class="num">~149,000</td><td class="num">7.2 GB, killed</td></tr><tr><td>Before streaming, local test</td><td class="num">171,000 fetched</td><td class="num">5.05 GB</td></tr><tr><td>After streaming, local test</td><td class="num">232,000 fetched</td><td class="num">2.81 GB</td></tr><tr><td>October 26, runner</td><td class="num">400,968 fetched</td><td class="num">2.78 GB</td></tr><tr><td>October 27, runner</td><td class="num">385,872 exported</td><td class="num">3.33 GB</td></tr></tbody></table></div>
+<p>The two local tests were run on my machine, not on the runner, so compare them with each other rather than with the runner rows.</p>
+<p>The peak is not perfectly flat. It moves with batch contents and with how much work a run has to redo. But it no longer grows with the number of jobs: going from about 230,000 to 400,000 jobs did not move it much.</p>
+<h2 id="the-cost-moved-somewhere-else">The cost moved somewhere else</h2>
+<p>Streaming didn't make the problem disappear. It moved it.</p>
+<ul><li><strong>To disk.</strong> A spool, swap and a large export all live on the runner's disk. On October 23 they filled it, so the workflow now removes toolchains this job never uses before it starts.</li><li><strong>To time.</strong> Memory is no longer what limits adding sources; runtime is. When I added 86 large employers on Workday, the first run took 2 hours and 11 minutes to fetch, compared with 35 minutes before, because nothing was cached yet. The next run, with the cache warm, took about 1.5 hours. A time budget for Workday and a step timeout keep a slow run from overrunning the job.</li></ul>
+<p>I prefer these constraints. A slow run still finishes and publishes. A killed run only leaves a "shutdown signal" in the log.</p>
+<h2 id="what-i-d-do-first-next-time">What I'd do first next time</h2>
+<p>Measure before fixing. Then look for data you keep only to compare, and data you keep after you've used it. Those fixes are cheap.</p>
+<p>But if memory grows in a straight line with your data, trimming only delays the limit. In a pipeline meant to grow, the change that lasts is the one that makes memory independent of dataset size.</p>
+<p><strong>What change saved you the most memory in a pipeline?</strong></p></article><p class="post-cta"><a href="../../">Search all open jobs →</a></p><h2>More from the blog</h2><ol class="post-list"><li class="post-item"><h3><a href="../when-a-job-disappears/">When a job disappears: did it close, or did my pipeline fail?</a></h3><div class="line"><time datetime="2026-10-26">October 26, 2026</time> · 4 min read</div><p class="muted">A missing job posting can mean a closed role, a failed collection, or an incomplete feed. Here is how my remote jobs pipeline handles that uncertainty.</p></li><li class="post-item"><h3><a href="../how-many-jobs-are-really-remote/">Only 9% of open jobs are fully remote. Here is where they are</a></h3><div class="line"><time datetime="2026-10-23">October 23, 2026</time> · 3 min read</div><p class="muted">We counted 268,835 open positions from 11,041 companies. Fewer than one in ten is fully remote, and the share changes a lot from one country to another.</p></li></ol>
+</main>
+<footer class="wrap muted foot"><p>Jobs are collected automatically from public company career boards.
+Always read and apply on the original posting.</p></footer>
+</body>
+</html>
