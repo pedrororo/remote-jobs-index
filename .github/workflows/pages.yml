@@ -1,0 +1,37 @@
+# Deploys this repo to GitHub Pages. It lives in the pipeline repo
+# (site/.github/workflows/pages.yml) and is copied here on every publish.
+# The branch deploy ("deploy from a branch") stops after a fixed 10 minutes,
+# which the site outgrew; this deploy's timeout can be set.
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Each publish is a fresh commit with the whole site, so only the newest counts.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 2400000

@@ -1,0 +1,450 @@
+{
+ "generated_at": "2026-11-14T14:48:41+00:00",
+ "source": "databricks",
+ "as_of": "2026-11-13",
+ "daily": [
+  {
+   "date": "2026-10-22",
+   "opened": 12608,
+   "opened_new_sources": 100880,
+   "closed": 0,
+   "reopened": 319
+  },
+  {
+   "date": "2026-10-23",
+   "opened": 8713,
+   "opened_new_sources": 2916,
+   "closed": 0,
+   "reopened": 171
+  },
+  {
+   "date": "2026-10-24",
+   "opened": 4797,
+   "opened_new_sources": 35138,
+   "closed": 12497,
+   "reopened": 165
+  },
+  {
+   "date": "2026-10-25",
+   "opened": 668,
+   "opened_new_sources": 17,
+   "closed": 7227,
+   "reopened": 16
+  },
+  {
+   "date": "2026-10-26",
+   "opened": 10542,
+   "opened_new_sources": 81361,
+   "closed": 4867,
+   "reopened": 504
+  },
+  {
+   "date": "2026-10-27",
+   "opened": 13264,
+   "opened_new_sources": 101468,
+   "closed": 1559,
+   "reopened": 487
+  },
+  {
+   "date": "2026-10-28",
+   "opened": 16988,
+   "opened_new_sources": 15656,
+   "closed": 10012,
+   "reopened": 533
+  },
+  {
+   "date": "2026-10-29",
+   "opened": 9843,
+   "opened_new_sources": 23703,
+   "closed": 10926,
+   "reopened": 1282
+  },
+  {
+   "date": "2026-10-30",
+   "opened": 11244,
+   "opened_new_sources": 57,
+   "closed": 14982,
+   "reopened": 393
+  },
+  {
+   "date": "2026-10-31",
+   "opened": 11314,
+   "opened_new_sources": 49,
+   "closed": 10160,
+   "reopened": 472
+  },
+  {
+   "date": "2026-11-01",
+   "opened": 1945,
+   "opened_new_sources": 158025,
+   "closed": 14724,
+   "reopened": 66
+  },
+  {
+   "date": "2026-11-02",
+   "opened": 17147,
+   "opened_new_sources": 45774,
+   "closed": 22469,
+   "reopened": 1905
+  },
+  {
+   "date": "2026-11-03",
+   "opened": 24724,
+   "opened_new_sources": 867,
+   "closed": 4241,
+   "reopened": 1914
+  },
+  {
+   "date": "2026-11-04",
+   "opened": 21752,
+   "opened_new_sources": 26002,
+   "closed": 15894,
+   "reopened": 1761
+  },
+  {
+   "date": "2026-11-05",
+   "opened": 3522,
+   "opened_new_sources": 1882,
+   "closed": 16139,
+   "reopened": 242
+  },
+  {
+   "date": "2026-11-06",
+   "opened": 35479,
+   "opened_new_sources": 370,
+   "closed": 29473,
+   "reopened": 3049
+  },
+  {
+   "date": "2026-11-07",
+   "opened": 19276,
+   "opened_new_sources": 37239,
+   "closed": 21830,
+   "reopened": 713
+  },
+  {
+   "date": "2026-11-08",
+   "opened": 794,
+   "opened_new_sources": 8,
+   "closed": 12569,
+   "reopened": 67
+  },
+  {
+   "date": "2026-11-09",
+   "opened": 13797,
+   "opened_new_sources": 197290,
+   "closed": 20135,
+   "reopened": 1475
+  },
+  {
+   "date": "2026-11-10",
+   "opened": 24107,
+   "opened_new_sources": 114622,
+   "closed": 5065,
+   "reopened": 1722
+  },
+  {
+   "date": "2026-11-11",
+   "opened": 34090,
+   "opened_new_sources": 104,
+   "closed": 15090,
+   "reopened": 2289
+  },
+  {
+   "date": "2026-11-12",
+   "opened": 19005,
+   "opened_new_sources": 56228,
+   "closed": 42107,
+   "reopened": 1270
+  },
+  {
+   "date": "2026-11-13",
+   "opened": 27338,
+   "opened_new_sources": 173065,
+   "closed": 17226,
+   "reopened": 1772
+  }
+ ],
+ "time_to_close": {
+  "all": {
+   "jobs": 342957,
+   "closed": 63382,
+   "still_open": 279575,
+   "median_days": null,
+   "open_after_7d": 0.811,
+   "open_after_30d": null
+  },
+  "by_category": [
+   {
+    "value": "operations",
+    "jobs": 48791,
+    "closed": 8467,
+    "still_open": 40324,
+    "median_days": null,
+    "open_after_7d": 0.824,
+    "open_after_30d": null
+   },
+   {
+    "value": "other",
+    "jobs": 39913,
+    "closed": 6152,
+    "still_open": 33761,
+    "median_days": null,
+    "open_after_7d": 0.821,
+    "open_after_30d": null
+   },
+   {
+    "value": "engineering",
+    "jobs": 36875,
+    "closed": 5707,
+    "still_open": 31168,
+    "median_days": null,
+    "open_after_7d": 0.839,
+    "open_after_30d": null
+   },
+   {
+    "value": "business_strategy",
+    "jobs": 35606,
+    "closed": 6920,
+    "still_open": 28686,
+    "median_days": null,
+    "open_after_7d": 0.806,
+    "open_after_30d": null
+   },
+   {
+    "value": "sales",
+    "jobs": 32766,
+    "closed": 5955,
+    "still_open": 26811,
+    "median_days": null,
+    "open_after_7d": 0.828,
+    "open_after_30d": null
+   },
+   {
+    "value": "healthcare",
+    "jobs": 29009,
+    "closed": 4141,
+    "still_open": 24868,
+    "median_days": null,
+    "open_after_7d": 0.826,
+    "open_after_30d": null
+   },
+   {
+    "value": "customer_success",
+    "jobs": 22026,
+    "closed": 6359,
+    "still_open": 15667,
+    "median_days": null,
+    "open_after_7d": 0.712,
+    "open_after_30d": null
+   },
+   {
+    "value": "finance",
+    "jobs": 15895,
+    "closed": 2974,
+    "still_open": 12921,
+    "median_days": null,
+    "open_after_7d": 0.828,
+    "open_after_30d": null
+   },
+   {
+    "value": "software_engineering",
+    "jobs": 14340,
+    "closed": 3382,
+    "still_open": 10958,
+    "median_days": null,
+    "open_after_7d": 0.778,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_ai",
+    "jobs": 13013,
+    "closed": 3037,
+    "still_open": 9976,
+    "median_days": null,
+    "open_after_7d": 0.77,
+    "open_after_30d": null
+   },
+   {
+    "value": "product_project",
+    "jobs": 8805,
+    "closed": 1712,
+    "still_open": 7093,
+    "median_days": null,
+    "open_after_7d": 0.802,
+    "open_after_30d": null
+   },
+   {
+    "value": "marketing",
+    "jobs": 7972,
+    "closed": 1650,
+    "still_open": 6322,
+    "median_days": null,
+    "open_after_7d": 0.804,
+    "open_after_30d": null
+   },
+   {
+    "value": "education",
+    "jobs": 5262,
+    "closed": 689,
+    "still_open": 4573,
+    "median_days": null,
+    "open_after_7d": 0.844,
+    "open_after_30d": null
+   },
+   {
+    "value": "hr_recruiting",
+    "jobs": 5183,
+    "closed": 934,
+    "still_open": 4249,
+    "median_days": null,
+    "open_after_7d": 0.826,
+    "open_after_30d": null
+   },
+   {
+    "value": "devops_cloud",
+    "jobs": 4837,
+    "closed": 933,
+    "still_open": 3904,
+    "median_days": null,
+    "open_after_7d": 0.819,
+    "open_after_30d": null
+   },
+   {
+    "value": "design_creative",
+    "jobs": 4325,
+    "closed": 782,
+    "still_open": 3543,
+    "median_days": null,
+    "open_after_7d": 0.818,
+    "open_after_30d": null
+   },
+   {
+    "value": "cybersecurity",
+    "jobs": 4130,
+    "closed": 848,
+    "still_open": 3282,
+    "median_days": null,
+    "open_after_7d": 0.808,
+    "open_after_30d": null
+   },
+   {
+    "value": "early_career",
+    "jobs": 4130,
+    "closed": 811,
+    "still_open": 3319,
+    "median_days": null,
+    "open_after_7d": 0.824,
+    "open_after_30d": null
+   },
+   {
+    "value": "legal",
+    "jobs": 3999,
+    "closed": 732,
+    "still_open": 3267,
+    "median_days": null,
+    "open_after_7d": 0.817,
+    "open_after_30d": null
+   },
+   {
+    "value": "science_research",
+    "jobs": 3594,
+    "closed": 633,
+    "still_open": 2961,
+    "median_days": null,
+    "open_after_7d": 0.814,
+    "open_after_30d": null
+   },
+   {
+    "value": "it_support",
+    "jobs": 2311,
+    "closed": 505,
+    "still_open": 1806,
+    "median_days": null,
+    "open_after_7d": 0.785,
+    "open_after_30d": null
+   },
+   {
+    "value": "languages",
+    "jobs": 175,
+    "closed": 59,
+    "still_open": 116,
+    "median_days": null,
+    "open_after_7d": 0.633,
+    "open_after_30d": null
+   }
+  ],
+  "by_role": [
+   {
+    "value": "other",
+    "jobs": 287927,
+    "closed": 49115,
+    "still_open": 238812,
+    "median_days": null,
+    "open_after_7d": 0.819,
+    "open_after_30d": null
+   },
+   {
+    "value": "software_engineering",
+    "jobs": 9478,
+    "closed": 2077,
+    "still_open": 7401,
+    "median_days": null,
+    "open_after_7d": 0.775,
+    "open_after_30d": null
+   },
+   {
+    "value": "cybersecurity",
+    "jobs": 8541,
+    "closed": 1654,
+    "still_open": 6887,
+    "median_days": null,
+    "open_after_7d": 0.799,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_engineering",
+    "jobs": 8326,
+    "closed": 1851,
+    "still_open": 6475,
+    "median_days": null,
+    "open_after_7d": 0.782,
+    "open_after_30d": null
+   },
+   {
+    "value": "data_science",
+    "jobs": 6399,
+    "closed": 1378,
+    "still_open": 5021,
+    "median_days": null,
+    "open_after_7d": 0.786,
+    "open_after_30d": null
+   },
+   {
+    "value": "devops_platform",
+    "jobs": 4897,
+    "closed": 1076,
+    "still_open": 3821,
+    "median_days": null,
+    "open_after_7d": 0.795,
+    "open_after_30d": null
+   },
+   {
+    "value": "sales_development",
+    "jobs": 4364,
+    "closed": 824,
+    "still_open": 3540,
+    "median_days": null,
+    "open_after_7d": 0.803,
+    "open_after_30d": null
+   }
+  ]
+ },
+ "quality": {
+  "run_at": "2026-11-13T15:16:25Z",
+  "sources": 13,
+  "sources_ok": 13,
+  "errors": 0,
+  "warnings": 0
+ }
+}
